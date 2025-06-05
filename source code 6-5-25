@@ -1,0 +1,220 @@
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+import java.util.Random;
+
+public class SlotMachine extends JFrame {
+    private JLabel slot1, slot2, slot3;
+    private JButton spinButton, toggleDelayButton;
+    private JPanel slotPanel;
+    private String[] symbols = {"🍒", "🍋", "🔔", "🍉", "⭐", "7️⃣"};
+    private JComboBox<String> colorPicker;
+    private boolean delayEnabled = true; // delay toggle flag
+
+    public SlotMachine() {
+        setTitle("Slot Machine");
+        setSize(400, 270);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setLayout(new BorderLayout());
+
+        // Slot labels
+        slotPanel = new JPanel();
+        slot1 = new JLabel("❓", SwingConstants.CENTER);
+        slot2 = new JLabel("❓", SwingConstants.CENTER);
+        slot3 = new JLabel("❓", SwingConstants.CENTER);
+
+        Font font = new Font("SansSerif", Font.BOLD, 40);
+        slot1.setFont(font);
+        slot2.setFont(font);
+        slot3.setFont(font);
+
+        slotPanel.add(slot1);
+        slotPanel.add(slot2);
+        slotPanel.add(slot3);
+
+        // Spin button
+        spinButton = new JButton("Spin 🎰");
+        spinButton.addActionListener(e -> {
+            spin();
+            if (delayEnabled) {
+                spinButton.setEnabled(false);
+                new Timer(1000, new ActionListener() {
+                    public void actionPerformed(ActionEvent evt) {
+                        spinButton.setEnabled(true);
+                        ((Timer) evt.getSource()).stop();
+                    }
+                }).start();
+            }
+        });
+
+        // Toggle Delay Button
+        toggleDelayButton = new JButton("Delay: ON");
+        toggleDelayButton.addActionListener(e -> {
+            delayEnabled = !delayEnabled;
+            toggleDelayButton.setText("Delay: " + (delayEnabled ? "ON" : "OFF"));
+        });
+
+        // Color picker
+        String[] colors = {"Blue", "Red", "Green", "Yellow", "Orange", "Purple"};
+        colorPicker = new JComboBox<>(colors);
+        colorPicker.addActionListener(e -> changeBackground());
+
+        // Bottom panel
+        JPanel bottomPanel = new JPanel();
+        bottomPanel.add(spinButton);
+        bottomPanel.add(new JLabel("Background:"));
+        bottomPanel.add(colorPicker);
+        bottomPanel.add(toggleDelayButton);
+
+        // Add components
+        add(slotPanel, BorderLayout.CENTER);
+        add(bottomPanel, BorderLayout.SOUTH);
+    }
+
+    private void spin() {
+        Random rand = new Random();
+        String s1 = symbols[rand.nextInt(symbols.length)];
+        String s2 = symbols[rand.nextInt(symbols.length)];
+        String s3 = symbols[rand.nextInt(symbols.length)];
+
+        slot1.setText(s1);
+        slot2.setText(s2);
+        slot3.setText(s3);
+
+        if (s1.equals(s2) && s2.equals(s3)) {
+            JOptionPane.showMessageDialog(this, "🎉 JACKPOT! 🎉");
+        }
+    }
+
+    private void changeBackground() {
+        String selected = (String) colorPicker.getSelectedItem();
+        Color color;
+
+        switch (selected) {
+            case "Red":    color = Color.RED; break;
+            case "Green":  color = Color.GREEN; break;
+            case "Yellow": color = Color.YELLOW; break;
+            case "Orange": color = Color.ORANGE; break;
+            case "Purple": color = new Color(128, 0, 128); break;
+            case "Blue":
+            default:       color = Color.CYAN; break;
+        }
+
+        slotPanel.setBackground(color);
+        slotPanel.repaint();
+    }
+
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(() -> new SlotMachine().setVisible(true));
+    }
+}
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+import java.util.Random;
+
+public class SlotMachine extends JFrame {
+    private JLabel slot1, slot2, slot3;
+    private JButton spinButton, toggleDelayButton;
+    private JPanel slotPanel;
+    private String[] symbols = {"🍒", "🍋", "🔔", "🍉", "⭐", "7️⃣"};
+    private JComboBox<String> colorPicker;
+    private boolean delayEnabled = true; // delay toggle flag
+
+    public SlotMachine() {
+        setTitle("Slot Machine");
+        setSize(400, 270);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setLayout(new BorderLayout());
+
+        // Slot labels
+        slotPanel = new JPanel();
+        slot1 = new JLabel("❓", SwingConstants.CENTER);
+        slot2 = new JLabel("❓", SwingConstants.CENTER);
+        slot3 = new JLabel("❓", SwingConstants.CENTER);
+
+        Font font = new Font("SansSerif", Font.BOLD, 40);
+        slot1.setFont(font);
+        slot2.setFont(font);
+        slot3.setFont(font);
+
+        slotPanel.add(slot1);
+        slotPanel.add(slot2);
+        slotPanel.add(slot3);
+
+        // Spin button
+        spinButton = new JButton("Spin 🎰");
+        spinButton.addActionListener(e -> {
+            spin();
+            if (delayEnabled) {
+                spinButton.setEnabled(false);
+                new Timer(1000, new ActionListener() {
+                    public void actionPerformed(ActionEvent evt) {
+                        spinButton.setEnabled(true);
+                        ((Timer) evt.getSource()).stop();
+                    }
+                }).start();
+            }
+        });
+
+        // Toggle Delay Button
+        toggleDelayButton = new JButton("Delay: ON");
+        toggleDelayButton.addActionListener(e -> {
+            delayEnabled = !delayEnabled;
+            toggleDelayButton.setText("Delay: " + (delayEnabled ? "ON" : "OFF"));
+        });
+
+        // Color picker
+        String[] colors = {"Blue", "Red", "Green", "Yellow", "Orange", "Purple"};
+        colorPicker = new JComboBox<>(colors);
+        colorPicker.addActionListener(e -> changeBackground());
+
+        // Bottom panel
+        JPanel bottomPanel = new JPanel();
+        bottomPanel.add(spinButton);
+        bottomPanel.add(new JLabel("Background:"));
+        bottomPanel.add(colorPicker);
+        bottomPanel.add(toggleDelayButton);
+
+        // Add components
+        add(slotPanel, BorderLayout.CENTER);
+        add(bottomPanel, BorderLayout.SOUTH);
+    }
+
+    private void spin() {
+        Random rand = new Random();
+        String s1 = symbols[rand.nextInt(symbols.length)];
+        String s2 = symbols[rand.nextInt(symbols.length)];
+        String s3 = symbols[rand.nextInt(symbols.length)];
+
+        slot1.setText(s1);
+        slot2.setText(s2);
+        slot3.setText(s3);
+
+        if (s1.equals(s2) && s2.equals(s3)) {
+            JOptionPane.showMessageDialog(this, "🎉 JACKPOT! 🎉");
+        }
+    }
+
+    private void changeBackground() {
+        String selected = (String) colorPicker.getSelectedItem();
+        Color color;
+
+        switch (selected) {
+            case "Red":    color = Color.RED; break;
+            case "Green":  color = Color.GREEN; break;
+            case "Yellow": color = Color.YELLOW; break;
+            case "Orange": color = Color.ORANGE; break;
+            case "Purple": color = new Color(128, 0, 128); break;
+            case "Blue":
+            default:       color = Color.CYAN; break;
+        }
+
+        slotPanel.setBackground(color);
+        slotPanel.repaint();
+    }
+
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(() -> new SlotMachine().setVisible(true));
+    }
+}
